@@ -1,0 +1,23 @@
+1) 
+
+a) Resto da divisão (primeiro pelo segundo valor) permitindo só inteiros
+b) Resto da Divisão (primeiro pelo segundo valor) permitindo só inteiros
+c) Produto da divisão de 15/2 e resto da divisão de 15/2 vezes 7
+d) Valor absoluto de 2
+e) 15 / 2 & 3^2.4 + valor absoluto de 2
+f) raiz quadrada de (5*5-4*3*6)/(2*3)
+g) o valor de pi * 3.5 * 3.5
+h) o valor de pi * 3.5 expoente 2
+i) valor de seno de 3* valor de pi / 2
+j) verifica se o valor absoluto de -4 é negativo, zero ou positivo
+k) divisão de 4 por 2+3*5/7
+l) raiz quadrada de 3 que por sua vez é multiplicada por 4
+m) raiz quadrada de 3*4
+n) verifica se 2 elevado a 3 - 10 + 40 é negativo, zero ou positivo
+o) realiza a operação entre -7 e + 2
+p) realiza a operação entre 5 + 4 + 6 + 8 + 20.4
+q) divisão de 5/2 somados a 3
+r) resto da divisão de 18 por 5 somados a 3.5
+s) raiz quadrada do valor absoluto de -4
+t) realiza a operação de 24/4
+u) realiza a divisão de 24/4
