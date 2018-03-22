@@ -5,7 +5,7 @@ b) Resto da Divisão (primeiro pelo segundo valor) permitindo só inteiros
 c) Produto da divisão de 15/2 e resto da divisão de 15/2 vezes 7
 d) Valor absoluto de 2
 e) 15 / 2 & 3^2.4 + valor absoluto de 2, deu erro pois o o valor elevado a 3 é um numero quebrado
-f) raiz quadrada de (5*5-4*3*6)/(2*3)
+f) raiz quadrada de (5*5-4*3*6)/(2*3) deu NãN pois a raiz deu negativa
 g) o valor de pi * 3.5 * 3.5
 h) o valor de pi * 3.5 expoente 2
 i) valor de seno de 3* valor de pi / 2
