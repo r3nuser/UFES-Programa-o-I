@@ -10,7 +10,7 @@ g) o valor de pi * 3.5 * 3.5
 h) o valor de pi * 3.5 expoente 2
 i) valor de seno de 3* valor de pi / 2
 j) verifica se o valor absoluto de -4 é negativo, zero ou positivo
-k) divisão de 4 por 2+3*5/7
+k) divisão de 4 por 2+3*5/7, dá erro pois não pode somar o retorno da função div com número float.
 l) raiz quadrada de 3 que por sua vez é multiplicada por 4
 m) raiz quadrada de 3*4
 n) verifica se 2 elevado a 3 - 10 + 40 é negativo, zero ou positivo
