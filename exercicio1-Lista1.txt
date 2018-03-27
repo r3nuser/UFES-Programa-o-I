@@ -1,23 +1,149 @@
-1) 
 
-a) Resto da divisão (primeiro pelo segundo valor) permitindo só inteiros
-b) Resto da Divisão (primeiro pelo segundo valor) permitindo só inteiros
-c) Produto da divisão de 15/2 e resto da divisão de 15/2 vezes 7
-d) Valor absoluto de 2
-e) 15 / 2 & 3^2.4 + valor absoluto de 2, deu erro pois o o valor elevado a 3 é um numero quebrado
-f) raiz quadrada de (5*5-4*3*6)/(2*3) deu NãN pois a raiz deu negativa
-g) o valor de pi * 3.5 * 3.5
-h) o valor de pi * 3.5 expoente 2
-i) valor de seno de 3* valor de pi / 2
-j) verifica se o valor absoluto de -4 é negativo, zero ou positivo
-k) divisão de 4 por 2+3*5/7, dá erro pois não pode somar o retorno da função div com número float.
-l) raiz quadrada de 3 que por sua vez é multiplicada por 4
-m) raiz quadrada de 3*4
-n) verifica se 2 elevado a 3 - 10 + 40 é negativo, zero ou positivo
-o) realiza a operação entre -7 e + 2
-p) realiza a operação entre 5 + 4 + 6 + 8 + 20.4
-q) divisão de 5/2 somados a 3
-r) resto da divisão de 18 por 5 somados a 3.5
-s) raiz quadrada do valor absoluto de -4
-t) realiza a operação de 24/4
-u) realiza a divisão de 24/4
+---EXERCICIO 1---
+
+A)
+-Mostra o resto da divisão entre os números 17 e 3
+-A função mod tem precedência
+-Sem erros
+-Sem erros
+-mod é restrito ao tipo int
+
+B)
+-Pergunta se o resto da divisão entre 15 e 2 é igual a 0
+-A função mod tem precedência, e logo após, a comparação
+-Sem erros
+-Sem erros
+-mod é restrito ao tipo int
+
+C)
+-Divisão inteira entre 15 e 2 mais resto da divisão de 15 e 2 multiplicados por 7
+-Primeiro executa as funções, depois a multiplicação e por fim a soma
+-Sem erros
+-Sem erros
+-Div e Mod são restritas ao tipo int
+
+D)
+-Indica o valor absoluto de 2
+-Função abs tem precedencia
+-Sem erros
+-Sem erros
+- [...]
+
+E)
+-Apenas realiza a operação indicada
+-abs -> ^ -> * e /
+-Deu erro pois o valor no expoente não era inteiro
+-15/2 * 3^(inteiro) + abs(-4)
+-abs e ^ restritas ao tipo int
+
+F)
+-Tira a raiz de 5*5-4*3*6 e divide por 2*3
+-função -> * e /
+-Não ocorreu um erro própriamente dito, apenas deu NaN, pois o interpretador tentou realizar uma raiz de número negativo
+-sqrt (-1*(5*5-4*3*6))/(2*3)
+-nenhuma
+
+G)
+-apenas realiza a operação
+-* tem prioridade
+-Sem erros
+-Sem erros
+-nenhuma
+
+H)
+-apenas realiza a operação
+-^ -> *
+-Sem erros
+-Sem erros
+-nenhuma
+
+I)
+-Multiplica o valor de seno de 3 por pi/2
+-função -> /
+-Sem erros
+-Sem erros
+-nenhuma
+
+J)
+-Em tese deveria informar se o valor absoluto de 4 é positivo
+-função abs depois signum
+-O signum espera um numero como argumento, e em vez disso, foi enviado uma função.
+-signum(abs(-4))
+-nenhuma
+
+K)
+-Em tese o valor da divisão inteira entre 4 e 2 deveria ser somado a 3 * 5/7
+-div -> * e / -> + 
+-Este foi um enígma, mas o que deu pra entender foi que: O interpretador haskell não consegue fazer uma operação entre inteiros e numeros com virgula.
+-E N Í G M A
+-div restrita ao tipo int
+
+L)
+-Multiplica o valor da raiz de 3 por 4
+-sqrt -> *
+-Sem erros
+-Sem erros
+-nenhuma
+
+M)
+-Mostra a raiz de 12
+-sqrt que por sua vez tem suas operações como prioridade
+-Sem erros
+-Sem erros
+-nenhuma
+
+N)
+-Retorna o sinal da operação entre parenteses
+-função -> ^ -> + e -
+-Sem erros
+-Sem erros
+-o ^ é restrito ao tipo int 
+
+O)
+-Realiza a operação
+- [...]
+-Sem erros
+-Sem erros
+-nenhuma
+
+P)
+-Realiza a operação
+- + 
+-Sem erros
+-Sem erros
+-nenhuma
+
+Q)
+-Realiza a divisão inteira de 5 por 2 e soma 3
+-div -> +
+-Sem erros
+-Sem erros
+-nenhuma
+
+R)
+-resto da divisão de 18 e 5 somados a 3.5
+-mod -> +
+-Este foi um enígma, mas o que deu pra entender foi que: O interpretador haskell não consegue fazer uma operação entre inteiros e numeros com virgula.
+-E N Í G M A
+-nenhuma
+
+S)
+-Em tese deveria mostrar a raiz do valor absoluto de 4
+-abs -> sqrt
+-O sqrt estava esperando como entrada um valor numérico e não uma função.
+-sqrt(abs(-4))
+-nenhuma
+
+T)
+-Realiza a divisão de 24/4
+-/
+-Sem erros
+-Sem erros
+-nenhuma
+
+U)
+-Realiza a divisão inteira de 24/4
+-div
+-Sem erros
+-Sem erros
+-nenhuma
