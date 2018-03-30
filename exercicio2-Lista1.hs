@@ -1,6 +1,4 @@
 -- Banco imobiliario
-q :: Int
-q = 0
 banco_min_notas x = div x 500 +
 			div (mod x 500) 100 +
 			div (mod x 100) 50 +
