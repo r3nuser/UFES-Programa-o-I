@@ -1,0 +1,52 @@
+Exercicio 1:
+
+-Reescrever a expressão
+-Indicar sequencia de operações
+-Se der erro, explicar o erro
+
+a)
+- Verifica se 3 é maior que cinco ou 5+1 é menor que 8 
+- + ,> e <, depois ||
+- Não deu erro.
+
+b)
+- Verifica se a negação de 3>1 e negação de 4-2>6 é verdadeira
+- -, >, not, depois &&
+- Não deu erro.
+c)
+- Verifica se a negação de 3 maior que 1 ou 4-2 maior que 7 é verdadeira
+- -, >, ||, depois not
+- Não deu erro.
+d)
+- Verifica se -5 é menor que 7 e 2 é maior ou igual a 2 e 10+4 é maior que 8
+- -, <, >=, depois &&
+- Não deu erro.
+e)
+- Verifica se 8 é maior que 8 ou verdadeiro.
+- >, depois ||
+- Não deu erro.
+f)
+- Verifica se falso e 7 é igual a 7
+- ==, &&
+- Não deu erro.
+g)
+- Em tese deveria mostrar a negação de 7 é igual a 7
+- ==, not
+- Deu erro pois a expressão ta escrita com apenas um "=", quando deveria estar com dois "==", pois um igual não composto é um igual de atribuição.
+h)
+- Em tese deveria mostrar se a expressão falso e 7 é igual a 7
+- ==, not
+- Deu erro pois a expressão ta escrita com apenas um "=", quando deveria estar com dois "==", pois um igual não composto é um igual de atribuição.
+i)
+- Em tese deveria verificar se -5 é maior que -3 ou 2-1 é menor que 0 e 3 é maior que 1
+- Parenteses, -, >, <, ||, depois &&
+- Deu erro pois o -3 está com um operador unário fora dos parenteses, para resolver deveria substituir o -3 por (-3), outro possivel erro também é o fato do menos estar colado ao >.
+j)
+- Verifica que -5 é maior que <3 ou 2-1 é menor que 0 e 3 é maior que 1
+- -, >, <, depois &&
+- Sem erro
+k)
+- Em tese verifica se 5 é igual a 5 ou negação de 5 é igual a 0
+- ==, not, depois ||
+- Deu erro pois o not não está com parenteses.
+
