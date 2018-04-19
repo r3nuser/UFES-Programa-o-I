@@ -21,8 +21,7 @@ delta a b c = (b*b)-4*a*c
 exerc_a a = (a>0 && a<100) && (mod a 3 == 0) && (mod a 5 == 0)
 
 -- Exercicio B
-exerc_b :: Bool -> Bool -> Bool
-exerc_b a b = (a || b) && not(a && b)
+oux a b = (a || b) && not(a && b)
 
 -- Exercicio C
 	-- d_a == Dia inicial
@@ -44,10 +43,11 @@ forma_triangulo_qm l1 l2 l3 = get_meio l1 l2 l3 + get_menor_all l1 l2 l3 >
 pert_retangulo [a,b] [e1,e2] [d1,d2] =  a >= e1 && b <= e2 && a <= d1 && b >= d2
 -- 2
 pert_losango [a,b] [s1,s2] [e1,e2] =  a >= e1 && a <= e1 + dist_horizontal &&
-									  a >= e1 - dist_vertical && a <= e1 
-										where 
-											dist_horizontal = (s1 - e1)*2
-											dist_vertical = (s2 - e2)*2
+				      a >= e1 - dist_vertical && a <= e1 
+				      	where 
+						dist_horizontal = (s1 - e1)*2
+						dist_vertical = (s2 - e2)*2
+						hipotenusa = (dist_vertical/2)^2 + (dist_horizontal/2)^2
 -- 3
 --pert_circulo
 pert_circulo [a,b] [c1,c2] r = abs(c1 - a) <= r && abs(c2 - b) <= r
