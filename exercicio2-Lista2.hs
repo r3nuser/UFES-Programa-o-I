@@ -43,13 +43,14 @@ forma_triangulo_qm l1 l2 l3 = get_meio l1 l2 l3 + get_menor_all l1 l2 l3 >
 -- 1
 pert_retangulo [a,b] [e1,e2] [d1,d2] =  a >= e1 && b <= e2 && a <= d1 && b >= d2
 -- 2
-pert_losango [a,b] [s1,s2] [e1,e2] =  
+pert_losango [a,b] [s1,s2] [e1,e2] =  a >= e1 && a <= e1 + dist_horizontal &&
+									  a >= e1 - dist_vertical && a <= e1 
 										where 
 											dist_horizontal = (s1 - e1)*2
 											dist_vertical = (s2 - e2)*2
 -- 3
 --pert_circulo
-
+pert_circulo [a,b] [c1,c2] r = abs(c1 - a) <= r && abs(c2 - b) <= r
 -- Exercicio F
 relation a b c = if a/=b && a/=c && b/=c then "Todos diferentes"
 					else if a==b && b==c then "Todos iguais"
@@ -76,6 +77,7 @@ quad_into [a,b] [x,y] = if ( a > x || b < y ) || (a == 0 && x == 0 && b == 0 && 
 								else 0
 
 -- Exercicio H
+
 
 -- Exercicio I
 maior_tres_numeros a b c = get_maior_all a b c
