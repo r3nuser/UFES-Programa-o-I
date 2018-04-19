@@ -13,7 +13,7 @@ get_maior_all a b c = get_maior (get_maior a b) c
 get_menor_all a b c = get_menor (get_menor a b) c
 get_meio a b c = get_maior (get_menor a c) b
 	--Math
-delta a b c = ((b^2)-4*a*c)
+delta a b c = (b*b)-4*a*c
 
 --Exercícios
 
@@ -41,9 +41,12 @@ forma_triangulo_qm l1 l2 l3 = get_meio l1 l2 l3 + get_menor_all l1 l2 l3 >
 
 -- Exercicio E
 -- 1
-pert_retangulo [a,b] [e1,e2] [d1,d2] =  a => e1 && b <= e2 && b <= d1 && b >= d2
+pert_retangulo [a,b] [e1,e2] [d1,d2] =  a >= e1 && b <= e2 && a <= d1 && b >= d2
 -- 2
---pert_losango
+pert_losango [a,b] [s1,s2] [e1,e2] =  
+										where 
+											dist_horizontal = (s1 - e1)*2
+											dist_vertical = (s2 - e2)*2
 -- 3
 --pert_circulo
 
@@ -86,8 +89,8 @@ preco_passagem passagem idade = if idade >= 60 then passagem*0.6 else
 								if idade <= 10 then passagem*0.50 else passagem
 
 -- Exercicio L
-equ_segundo_grau a b c = if sqrt(delta a b c)<0	then [0,0]
-							else [((-b)+(sqrt(delta a b c)))/2*a,((-b)-(sqrt(delta a b c)))/2*a]
+equ_segundo_grau a b c = if delta a b c<0	then "Nao ha raizes reais"
+							else "Raizes: " ++ show [((-b)+(sqrt(delta a b c)))/2*a,((-b)-(sqrt(delta a b c)))/2*a]
 
 -- Exercicio M
 abono horas_trab horas_falt = if pontos >= 1 && pontos <= 10 then 100.00
