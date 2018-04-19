@@ -40,6 +40,12 @@ forma_triangulo_qm l1 l2 l3 = get_meio l1 l2 l3 + get_menor_all l1 l2 l3 >
 			    				get_maior_all l1 l2 l3
 
 -- Exercicio E
+-- 1
+pert_retangulo [a,b] [e1,e2] [d1,d2] =  
+-- 2
+pert_losango
+-- 3
+pert_circulo
 
 -- Exercicio F
 relation a b c = if a/=b && a/=c && b/=c then "Todos diferentes"
