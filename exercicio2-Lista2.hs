@@ -42,12 +42,17 @@ forma_triangulo_qm l1 l2 l3 = get_meio l1 l2 l3 + get_menor_all l1 l2 l3 >
 -- 1
 pert_retangulo [a,b] [e1,e2] [d1,d2] =  a >= e1 && b <= e2 && a <= d1 && b >= d2
 -- 2
-pert_losango [a,b] [s1,s2] [e1,e2] =  a >= e1 && a <= e1 + dist_horizontal &&
-				      a >= e1 - dist_vertical && a <= e1 
-				      	where 
-						dist_horizontal = (s1 - e1)*2
-						dist_vertical = (s2 - e2)*2
-						hipotenusa = (dist_vertical/2)^2 + (dist_horizontal/2)^2
+inc_reta [a,b] [x,y] = (y-b)/(x-a);
+pert_losango [a,b] [e1,e2] [s1,s2] =  a >= e1 && a<= e1 + dist_horizontal &&
+										b <= s2 && b>= s2 - dist_vertical &&(
+										inc_reta [e1,e2] [a,b] <= m1a ||
+										inc_reta [s1,(s2 - dist_vertical)] [a,b] >= m1b)
+				      					where 
+											dist_horizontal = (s1 - e1)*2
+											dist_vertical = (s2 - e2)*2
+											m1a = inc_reta [e1,e2] [s1, s2]
+											m1b = inc_reta [s1,(s2 - dist_vertical)] [e1, e2]
+											hipotenusa = (dist_vertical/2)^2 + (dist_horizontal/2)^2
 -- 3
 --pert_circulo
 pert_circulo [a,b] [c1,c2] r = abs(c1 - a) <= r && abs(c2 - b) <= r
