@@ -52,10 +52,11 @@ pert_losango [a,b] [e1,e2] [s1,s2] =  a >= e1 && a<= e1 + dist_horizontal &&
 											dist_vertical = (s2 - e2)*2
 											m1a = inc_reta [e1,e2] [s1, s2]
 											m1b = inc_reta [s1,(s2 - dist_vertical)] [e1, e2]
-											hipotenusa = (dist_vertical/2)^2 + (dist_horizontal/2)^2
+
 -- 3
 --pert_circulo
 pert_circulo [a,b] [c1,c2] r = abs(c1 - a) <= r && abs(c2 - b) <= r
+
 -- Exercicio F
 relation a b c = if a/=b && a/=c && b/=c then "Todos diferentes"
 					else if a==b && b==c then "Todos iguais"
@@ -82,7 +83,15 @@ quad_into [a,b] [x,y] = if ( a > x || b < y ) || (a == 0 && x == 0 && b == 0 && 
 								else 0
 
 -- Exercicio H
-
+-- x = tamanho horizontal do tabuleiro 
+-- y = tamanho vertical do tabuleiro
+-- a = pos x do tabuleiro
+-- b = pos y do tabuleiro 
+-- c = movimento pos x
+-- d = movimento pos y 
+pert_tabuleiro [x,y] [a,b] [c,d] = (not (a <= 0 || a > x || c <= 0 || c > x 
+								   || b <= 0 || b > y || d <= 0 || d > y)) &&
+								   (abs (a-c) <= 1 && abs (b-d) <= 1)
 
 -- Exercicio I
 maior_tres_numeros a b c = get_maior_all a b c
