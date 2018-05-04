@@ -49,13 +49,12 @@ pert_losango [a,b] [e1,e2] [s1,s2] =  a >= e1 && a<= e1 + dist_horizontal &&
 									  --ABAIXO PERTENCE AO LOSANGO USANDO INC RETA
 									  inc_reta [e1, e2] [a, b] <= m1a &&
 									  inc_reta [e1, e2] [a, b] >= m1b &&
-									  inc_reta [e3, e4] [a, b] >= m2a &&
-									  inc_reta [e3, e4] [a, b] <= m2b)
+									  inc_reta [e3, e2] [a, b] >= m2a &&
+									  inc_reta [e3, e2] [a, b] <= m2b)
 				      					where 
 											dist_horizontal = (s1 - e1)*2
 											dist_vertical = (s2 - e2)*2
 											e3 = e1+dist_horizontal
-											e4 = e2
 											m1a = inc_reta [e1, e2] [s1, s2]
 											m1b = inc_reta [e1, e2] [s1,(s2 - dist_vertical)]
 											m2a = inc_reta [e3, e4] [s1, s2] 
