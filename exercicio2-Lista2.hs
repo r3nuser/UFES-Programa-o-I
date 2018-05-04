@@ -43,15 +43,23 @@ forma_triangulo_qm l1 l2 l3 = get_meio l1 l2 l3 + get_menor_all l1 l2 l3 >
 pert_retangulo [a,b] [e1,e2] [d1,d2] =  a >= e1 && b <= e2 && a <= d1 && b >= d2
 -- 2
 inc_reta [a,b] [x,y] = (y-b)/(x-a);
-pert_losango [a,b] [e1,e2] [s1,s2] =  a >= e1 && a<= e1 + dist_horizontal &&
-										b <= s2 && b>= s2 - dist_vertical &&(
-										inc_reta [e1,e2] [a,b] <= m1a ||
-										inc_reta [s1,(s2 - dist_vertical)] [a,b] >= m1b)
+pert_losango [a,b] [e1,e2] [s1,s2] =  a >= e1 && a<= e1 + dist_horizontal && 
+									  b <= s2 && b>= s2 - dist_vertical && (
+									  --ACIMA PERTENCE RETANGULO
+									  --ABAIXO PERTENCE AO LOSANGO USANDO INC RETA
+									  inc_reta [e1, e2] [a, b] <= m1a &&
+									  inc_reta [e1, e2] [a, b] >= m1b &&
+									  inc_reta [e3, e4] [a, b] >= m2a &&
+									  inc_reta [e3, e4] [a, b] <= m2b)
 				      					where 
 											dist_horizontal = (s1 - e1)*2
 											dist_vertical = (s2 - e2)*2
-											m1a = inc_reta [e1,e2] [s1, s2]
-											m1b = inc_reta [s1,(s2 - dist_vertical)] [e1, e2]
+											e3 = e1+dist_horizontal
+											e4 = e2
+											m1a = inc_reta [e1, e2] [s1, s2]
+											m1b = inc_reta [e1, e2] [s1,(s2 - dist_vertical)]
+											m2a = inc_reta [e3, e4] [s1, s2] 
+											m2b = inc_reta [e3, e4] [s1,(s2 - dist_vertical)]
 
 -- 3
 --pert_circulo
