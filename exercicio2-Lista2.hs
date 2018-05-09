@@ -14,6 +14,7 @@ get_menor_all a b c = get_menor (get_menor a b) c
 get_meio a b c = get_maior (get_menor a c) b
 	--Math
 delta a b c = (b*b)-4*a*c
+dist_euclidiana [x1,y1] [x2,y2] = sqrt( ((x2-x1)^2) + ((y2-y1)^2) )
 
 --Exercícios
 
@@ -62,7 +63,7 @@ pert_losango [a,b] [e1,e2] [s1,s2] =  a >= e1 && a<= e1 + dist_horizontal &&
 
 -- 3
 --pert_circulo
-pert_circulo [a,b] [c1,c2] r = abs(c1 - a) <= r && abs(c2 - b) <= r
+pert_circulo [a,b] [c1,c2] r = dist_euclidiana [a,b] [c1,c2]  <= r
 
 -- Exercicio F
 relation a b c = if a/=b && a/=c && b/=c then "Todos diferentes"
