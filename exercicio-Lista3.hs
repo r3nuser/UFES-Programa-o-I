@@ -173,4 +173,4 @@ idade_relativa segundos planeta | planeta == "terra" = "Idade:" ++ show(truncate
                                 | planeta == "netuno" = "Idade:" ++ show(truncate(idade_na_terra / 164.79132))
                                 | otherwise = "Planeta Invalido"
                                   where
-                                    idade_na_terra = (((fromIntegral(segundos)/60)/60)/24)/30/365
+                                    idade_na_terra = (((fromIntegral(segundos)/60)/60)/24)/30/12
