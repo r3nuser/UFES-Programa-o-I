@@ -45,6 +45,5 @@ planXY x y = if x<0
 			else 1
 
 -- Determinar se X pertence a A, B
- 
 pertAB :: Float -> Float -> Float -> Bool
 pertAB x a b = if a<b then a<=x && b>=x else False
