@@ -114,13 +114,12 @@ v) resolva utilizando descrição por listas
 --}
 
 --a) Obter o menor valor de uma lista de números.
-
 pmev::[Integer]->Integer->Integer
 pmev xs menor | length xs == 0 = menor
               | last xs < menor = pmev (init xs) (last xs)
               | last xs >= menor = pmev (init xs) menor 
 menor_valor::[Integer]->Integer
-menor_valor xs =  pmev xs (last xs)
+menor_valor xs = pmev xs (last xs)
 
 --b) Dada uma lista xs, fornecer uma dupla contendo o menor e o maior elemento dessa lista.
 pmav::[Integer]->Integer->Integer
