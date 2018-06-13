@@ -1,0 +1,106 @@
+Informações do porto:
+-Um porto tem o seu cais dividido em vários berços.
+-Somente um navio é atendido por vez.
+
+Informações do navio:
+-ID
+-Hora de chegada
+-Hora de partida
+-Quantidade total de Produtos
+
+Todos os dados referentes ao navio podem ser representados por uma tupla do tipo (Int, Int, Int, Int).
+
+Informações do berço:
+-ID
+-Hora de abertura
+-Hora de fechamento
+
+Recepção de navios nos berços:
+
+Cada navio, quando alocado em um berço do porto, possui um tempo de atendimento.
+
+Necessário informar tempo de atendimento de cada navio em cada berço do porto.
+
+Representar o tempo de atendimento em uma lista de tamanho igual ao número de berços do porto,
+que por sua vez, contém listas de tamanho igual ao total de navios a serem atendidos no berço referentes
+ao tempo de atendimento de cada navio no berço.
+
+Tempo de atendimento nulo = Navio não pode atracar no berço.
+
+Então, também é necessário informar os tempos de
+atendimento de cada navio em cada berço do porto. Isto é representado por meio de uma
+lista de tamanho igual ao número de berços do porto, contendo listas de tamanho igual ao
+total de navios a serem atendidos no porto, contendo por sua vez, os tempos de
+atendimento de cada navio no berço. O tempo de atendimento nulo indica que o
+respectivo navio não pode atracar naquele berço.
+
+Nomes sugeridos | Exemplo:
+
+listaNavios = [(1,5,16,30), (2,6,18,30), (3,3,12,50), (4,4,22,50), (5,11,20,80)]
+listaBercos = [(1,4,20), (2,3,18)]
+infoPorto = [[1, 6, 4, 4, 6], [2, 0, 1, 0, 5]]
+naviosAlocadosBerco1 = ((1,4,20), [(4,4,22,50), (5,11,20,80)])
+naviosAlocadosBerco2 = ((2,3,18), [(3,3,12,50), (1,5,16,30)])
+naviosAlocadosBerco = [naviosAlocadosBerco1, naviosAlocadosBerco2]
+
+Tarefa:
+
+1. (atendido) Dado um navio, um berço e as informações dos tempos de atendimento
+dos navios nos berços do porto, faça uma função que verifique se o navio pode ser
+atendido no berço. Exemplo:
+> atendido (1,5,16,30) (1,4,20) infoPorto
+Resposta: True
+
+2. (filaNavios) Considere que vários navios chegam ao porto para serem carregados
+com produtos para exportação. Como o processo de carregamento pode ser muito
+demorado, uma fila de navios é formada a medida que eles vão chegando. Dada uma
+lista de navios que devem atracar no porto, faça uma função que a organize por
+ordem de chegada dos navios. Exemplo:
+> filaNavios listaNavios
+Resposta: [(3,3,12,50), (4,4,22,50), (1,5,16,30), (2,6,18,30), (5,11,20,80)]
+
+3. (tempoOcioso) Um berço possui uma janela de tempo de trabalho, dentro da qual ele
+pode atender vários navios, um por vez. Considere um berço e uma lista de navios
+atendidos nele. Informe o total de tempo ocioso no berço dentro da sua janela de
+tempo de trabalho, ou seja, informe o tempo total sem atendimento de navios durante
+a janela de tempo de trabalho do berço. Exemplo:
+> tempoOcioso (1, 4, 20) naviosAlocadosBerco1
+Resposta: 6
+
+4. (bercoOcioso) Dentre todos os berços de um porto, indique o identificador daquele
+com maior tempo ocioso. Exemplo:
+ > bercoOcioso bercos naviosAlocadosBerco
+Resposta: 2
+
+5. (naviosCandidatosBerco) Informe para cada berço, os navios da lista de navios que
+podem atracar e ser atendidos no berço
+> naviosCandidatosBerco bercos listaNavios
+Resposta: [(1, [(1,5,16,30), (2,6,18,30), (4,4,22,50), (5,11,20,80)]), (2, [(1,5,16,30),
+(3,3,12,50), (5,11,20,80)])]
+
+6. (insereNavioBerco) Dado um navio e um berço com a lista de navios atendidos nele,
+verifique se o navio dado como entrada também pode ser atendido neste berço. Além
+disso, indique na sua resposta, a quantidade total de produtos carregados nos navios
+que foram alocados naquele berço. Exemplo:
+> insereNavioBerco (1,5,16,30) naviosAlocadosBerco1
+Resposta:(1, 160, [(4,4,22,50), (1,5,16,30) , (5,11,20,80)])
+
+7. (esperaNavio) Dada um navio, indique o tempo de espera do navio caso ele tenha
+sido alocado no berço. Se não foi alocado, retorne a mensagem: “O navio idn não foi
+alocado no berço idb”, onde idn e idb indicam respectivamente os identificadores do
+navio e do berço. Exemplo:
+> esperaNavio (1,5,16,30) naviosAlocadosBerco1
+Resposta: 3
+
+8. (constroiAlocacaoBerco) Dado um berço, a fila de navios ordenada pelos seus
+tempos de chegada e seus respectivos tempos de atendimento, informe a lista de
+todos os navios que podem ser alocados naquele berço. Indique os identificadores
+dos navios e seus horários de chegada e partida no berço. Além disso, deve-se
+computar a quantidade total de produtos carregados nos navios que foram alocados
+naquele berço. Exemplo:
+> constroiAlocacaoBerco (1,4,20) (filaNavios listaNavios) infoPorto
+Resposta: ((1,4,20), 110, [(4,4,8), (1,8,9), (2,9,15)]
+
+
+-------------------
+
