@@ -34,42 +34,48 @@ intes listas constantes:
 
 --}
 --a) múltiplos de 5 maiores que 0 e menores que 80;
+
 multiplos_de_cinco::[Integer]
 multiplos_de_cinco = [5,10..75]
 
 --b) meses de um ano;
+
 meses_do_ano::[String]
 meses_do_ano = ["Janeiro","Fevereiro","Marco",
-                "Abril","Maio","Junho",
-                "Julho","Agosto","Setembro",
-                "Outubro","Novembro","Dezembro"]
+                "Abril","Maio","Junho","Julho",
+                "Agosto","Setembro","Outubro",
+                "Novembro","Dezembro"]
 
 --c) número de dias por cada mês de um ano;
-fevereiro_relativo::Bool -> [Integer]
-fevereiro_relativo bissexto | bissexto  = [ x | x <- [1 .. 29] ]
-                            | otherwise = [ x | x <- [1 .. 28] ] 
 
-n_dias_mes_do_ano::Bool -> [[Integer]]
-n_dias_mes_do_ano bissexto= [jan,fev,mar,abr,mai,jun,jul,ago,set,out,nov,dez]
-                            where
-                                jan = [ x | x <- [1 .. 31] ]
-                                fev = fevereiro_relativo bissexto
-                                mar = [ x | x <- [1 .. 31] ]
-                                abr = [ x | x <- [1 .. 30] ]
-                                mai = [ x | x <- [1 .. 31] ]
-                                jun = [ x | x <- [1 .. 30] ]
-                                jul = [ x | x <- [1 .. 31] ]
-                                ago = [ x | x <- [1 .. 31] ]
-                                set = [ x | x <- [1 .. 30] ]
-                                out = [ x | x <- [1 .. 31] ]
-                                nov = [ x | x <- [1 .. 30] ]
-                                dez = [ x | x <- [1 .. 31] ]
+fevereiro_relativo::Bool->[Integer]
+fevereiro_relativo bissexto = if bissexto 
+                              then [ x | x <- [1 .. 29] ]
+                              else [ x | x <- [1 .. 28] ] 
+
+n_dias_mes_do_ano::Bool->[[Integer]]
+n_dias_mes_do_ano bissexto = [jan,fev,mar,abr,mai,jun,jul,ago,set,out,nov,dez]
+                    where
+                        jan = [ x | x <- [1 .. 31] ]
+                        fev = fevereiro_relativo bissexto
+                        mar = [ x | x <- [1 .. 31] ]
+                        abr = [ x | x <- [1 .. 30] ]
+                        mai = [ x | x <- [1 .. 31] ]
+                        jun = [ x | x <- [1 .. 30] ]
+                        jul = [ x | x <- [1 .. 31] ]
+                        ago = [ x | x <- [1 .. 31] ]
+                        set = [ x | x <- [1 .. 30] ]
+                        out = [ x | x <- [1 .. 31] ]
+                        nov = [ x | x <- [1 .. 30] ]
+                        dez = [ x | x <- [1 .. 31] ]
 
 --d) dias da semana;
+
 dias_da_semana::[String]
 dias_da_semana = ["Domingo","Segunda","Terca","Quarta","Quinta","Sexta","Sabado"]
 
 --e) relação das disciplinas em que você está matriculado.
+
 disciplinas_matriculadas::[String]
 disciplinas_matriculadas = ["Calculo I", "Prog I", "Algebra Linear", "Introcomp", "ATC I"]
 
@@ -108,83 +114,83 @@ v) resolva utilizando descrição por listas
 --}
 
 --a) Obter o menor valor de uma lista de números.
-pmev::[Integer] -> Integer -> Integer
-pmev xs menor | length xs == 0 = menor
-              | last xs < menor = pmev (init xs) (last xs)
-              | last xs >= menor = pmev (init xs) menor 
-menor_valor::[Integer] -> Integer
-menor_valor xs = pmev xs (last xs)
+elem_menor_que::[Integer]->Integer->[Integer]
+elem_menor_que xs elem = [ x | x <- xs, elem > x]
 
-
-minimo xs = 
+menor_valor::[Integer]->Integer
+menor_valor xs = [ x | x <- xs, null(elem_menor_que xs x) ]!!0
 
 --b) Dada uma lista xs, fornecer uma dupla contendo o menor e o maior elemento dessa lista.
-pmav::[Integer] -> Integer -> Integer
-pmav xs maior | length xs == 0 = maior
-              | last xs >= maior = pmav (init xs) (last xs)
-              | last xs < maior = pmav (init xs) maior
-menor_e_maior::[Integer] -> (Integer,Integer)
-menor_e_maior xs = (pmav xs (last xs),pmev xs (last xs))
+elem_maior_que::[Integer]->Integer->[Integer]
+elem_maior_que xs elem = [ x | x <- xs, elem < x]
+maior_valor::[Integer]->Integer
+maior_valor xs = [x | x <- xs, null(elem_maior_que xs x) ]!!0
+
+maior_e_menor::[Integer]->(Integer,Integer)
+maior_e_menor xs = (menor_valor xs,maior_valor xs)
 
 --c) Produzir uma lista dos múltiplos de um dado número n, menores ou iguais a um dado limite lim. Exemplo: g 5 20 -> [5, 10, 15, 20]
-lista_de_multiplos::Integer -> Integer -> [Integer]
-lista_de_multiplos n lim = [x | x <- [n, 2*n .. lim]]
+
+multiplo_com_limite::Integer->Integer->[Integer]
+multiplo_com_limite multiplo limite = [x*multiplo | x <- [1..lim] ]
+                                      where
+                                        lim = div limite multiplo                                     
 
 --d)Dividir uma lista pela metade e apresentar cada uma das partes em uma dupla. Exemplo: divideLista [1,3,5,8,15] = ([1,3],[5,8,15] )
-lista_metade::[a] -> ([a],[a])
-lista_metade xs = (take meio xs, drop meio xs)
-                  where
-                      meio = div (length xs) 2                                             
-                  
+
+dividir_lista::[a]->([a], [a])
+dividir_lista xs = (take metade xs, drop metade xs)
+                   where 
+                       metade = div (length xs) 2
+
 --e) Duplicar os elementos de uma lista. Exemplo: duplicaLista [1,2,3] -> [1,1,2,2,3,3]
-dup_hack::[a] -> [a] -> Int -> [a]
-dup_hack xt xs index| length xt == 2 * length xs = xt
-                    | otherwise = dup_hack (xt ++ xs !! (index + 1) : [(xs !! (index + 1))] ) xs (index + 1)
-duplicar_elementos::[a] -> [a]
-duplicar_elementos xs = dup_hack [] xs (-1)
+
+duplicar x = [x,x]
+duplicaLista xs = concat [ duplicar x | x <- xs]
 
 --f) Dadas duas listas de elementos distintos, determinar a união delas.
-uniao_lista::[a] -> [a] -> [a]
-uniao_lista xs xt = xs ++ xt;
+
+union::[Int]->[Int]->[Int]
+union xs ys = [ x | x <- xs, y <- ys, x /= y]
 
 -- g)Dadas duas listas de elementos distintos, determinar a interseção delas.
 
-incluso::(Eq a) => a -> [a] -> Bool
-incluso elemento xs = not (null [x | x <- xs, x == elemento])
-intersec::(Eq a) => [a]->[a]->[a]
-intersec xs xt = [x | x <- xs, incluso x xs, incluso x xt]
-
-
-elemento_incluso::(Eq a) => a -> [a] -> Bool
-elemento_incluso elemento xs | length xs == 0 = False
-                             | head xs == elemento  = True
-                             | otherwise = elemento_incluso elemento (tail xs)
-busca_intersec::(Eq a) => [a] -> [a] -> [a] -> [a]
-busca_intersec intersecs xs xt | length xs == 0 = intersecs
-                               | elemento_incluso (xs !! 0) xt = busca_intersec (intersecs ++ head xs : []) (tail xs) xt
-                               | otherwise = busca_intersec intersecs (tail xs) xt
-intersec_listas::(Eq a) => [a] -> [a] -> [a]
-intersec_listas xs xt = busca_intersec [] xs xt
+intersection::[Int]->[Int]->[Int]
+intersection xs ys = [ x | x <- xs, y <- ys, x == y]
 
 --h) Calcule a distância de Hamming entre dois números inteiros que possuam, cada um, exatamente n algarismos. A distância de Hamming corresponde ao número de algarismos que diferem em suas posições correspondentes.
-distancia_de_hamming::[Char] -> [Char] -> Integer
-distancia_de_hamming xs xt = 1
+
 --i) Dada uma lista l, contendo uma quantidade igual de números inteiros pares e ímpares (em qualquer ordem), defina uma função que, quando avaliada, produz uma lista na qual esses números pares   e   ímpares   encontram-se   alternados.   Exemplo:   alternaLista   [10,2,31,45,6,18,5,20,15,19]   ->[10,31,2,45,6,5,18,15,20,19]
-concat_pares_impares::[Integer] -> [Integer] -> [Integer] -> [Integer]
-concat_pares_impares xs xt xu | length xs == 0 = xu
-                              | otherwise = concat_pares_impares (tail xs) (tail xt) (xu ++ head xs : [] ++ head xt : [])
-pares_e_impares::[Integer] -> [Integer]
-pares_e_impares xs = concat_pares_impares [x | x <- xs, even x] [x | x <- xs, odd x] []
 
 --j) Implemente as funções take e drop.
 
 --k) Verificar se um caracter dado como entrada é uma letra.
 
+is_letter::Char->Bool
+is_letter char = (char>='A' && char <='Z') || (char>='a' && char<='z') 
+
 --l) Verificar se um caracter dado como entrada é um dígito.
+
+is_digit::Char->Bool
+is_digit char = (char>='0' && char<='9')
 
 --m) Verificar se uma cadeia de caracteres é uma palavra (ou seja, é formada apenas de letras).
 
+only_letter::[Char]->Bool
+only_letter word = [ x | x <- word, is_letter x ] == word
+
 --n) Verificar se uma cadeia de caracteres representa um número inteiro positivo (ou seja, a cadeia de caracteres só é formada por dígitos).
+
+only_digit::[Char]->Bool
+only_digit word = [ x | x <- word, is_digit x ] == word
 
 --o) Dada uma cadeia de caracteres, contar o número de ocorrências de vogais, para cada vogal.
 
+vogal::[Char]
+vogal = ['a','e','i','o','u']
+
+isVogal::Char->Bool
+isVogal caracter = not (null [ x | x <- vogal, caracter == x])
+
+lengthVogal::[Char]->Int
+lengthVogal word = length [ x | x <- word, isVogal x]
