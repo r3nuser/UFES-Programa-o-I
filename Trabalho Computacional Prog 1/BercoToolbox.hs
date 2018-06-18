@@ -1,7 +1,8 @@
 module BercoToolbox(
     tempoAtendimentoBerco,
     tempoAberto,
-    id_berco
+    id_berco,
+    get_abertura
 )where
 
 import Objetos
@@ -14,3 +15,7 @@ tempoAtendimentoBerco berco infoPorto = infoPorto!!(id_berco berco - 1)
 
 tempoAberto::Berco->Int
 tempoAberto (id, abertura, fechamento) = fechamento - abertura
+
+get_abertura::Berco->Int
+get_abertura (id, abertura, fechamento) = abertura
+
