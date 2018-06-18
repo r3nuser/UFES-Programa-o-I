@@ -7,6 +7,9 @@ import NavioToolbox
 import BercoToolbox
 import ListaToolbox
 
+--------------------------------------------------------------------------------
+-- FUNCAO QUE RETORNA O TEMPO DE ATENDIMENTO DE UM NAVIO NO BERCO             --
+--------------------------------------------------------------------------------
 tempoAtendimento::Navio->Berco->ListaTempoAtendimento->Int
 tempoAtendimento navio berco infoPorto = (tempoAtendimentoBerco berco infoPorto)!!(id_navio navio - 1)
 --------------------------------------------------------------------------------
