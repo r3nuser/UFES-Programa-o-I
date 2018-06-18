@@ -77,12 +77,23 @@ listaTempoOcioso bercos naviosAlocados = [ (berco, tempo) | berco<-bercos, tempo
 -- FUNCAO QUE CALCULA QUAL BERCO TEM O MAIOR TEMPO OCIOSO E RETORNA SEU ID    --
 --------------------------------------------------------------------------------
 bercoOcioso::ListaDeBercos->NaviosAlocadosBerco->Int
-bercoOcioso bercos naviosAlocadosBerco = 1
+bercoOcioso bercos naviosAlocadosBerco = id_berco(fst([ x | x <- lista, maximo listaMapeada == snd x]!!0))
+                                           where
+                                              lista = listaTempoOcioso listaBercos naviosAlocadosBerco
+                                              listaMapeada = map snd lista
+
 --------------------------------------------------------------------------------
+-- --
 --------------------------------------------------------------------------------
+
 --------------------------------------------------------------------------------
+-- --
 --------------------------------------------------------------------------------
+
 --------------------------------------------------------------------------------
+-- --
 --------------------------------------------------------------------------------
+
 --------------------------------------------------------------------------------
+-- --
 --------------------------------------------------------------------------------
