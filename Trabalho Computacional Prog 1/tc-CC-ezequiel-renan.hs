@@ -83,8 +83,10 @@ bercoOcioso bercos naviosAlocadosBerco = id_berco(fst([ x | x <- lista, maximo l
                                               listaMapeada = map snd lista
 
 --------------------------------------------------------------------------------
--- --
+-- FUNÇÃO QUE INFORMA OS NAVIOS QUE PODEM ATACAR NOS BERCOS                   --
 --------------------------------------------------------------------------------
+--naviosCandidatosBerco::ListaDeBercos->ListaDeNavios->[(Int,ListaDeNavios)]
+--naviosCandidatosBerco bercos listaNavios = 
 
 --------------------------------------------------------------------------------
 -- --
