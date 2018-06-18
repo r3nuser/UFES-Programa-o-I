@@ -5,15 +5,17 @@ module Objetos
  ListaDeNavios,
  ListaDeBercos,
  ListaTempoAtendimento,
- NaviosNoBerco
+ NaviosNoBerco,
+ NaviosAlocadosBerco
  ) where
 
 type Berco = (Int, Int, Int)
 type Navio = (Int, Int, Int, Int)
-type VetorAtendimento = [Int]
 type ListaDeNavios = [Navio]
 type ListaDeBercos = [Berco]
+type VetorAtendimento = [Int]
 type ListaTempoAtendimento = [VetorAtendimento]
 type NaviosNoBerco = (Berco,ListaDeNavios)
+type NaviosAlocadosBerco = [NaviosNoBerco]
 
  
