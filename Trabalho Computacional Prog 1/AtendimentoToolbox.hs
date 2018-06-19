@@ -1,5 +1,7 @@
 module AtendimentoToolbox(
-    tempoAtendimento
+    tempoAtendimento,
+    listaTempoOcioso,
+    naviosCandidatos
 ) where
 
 import Objetos
