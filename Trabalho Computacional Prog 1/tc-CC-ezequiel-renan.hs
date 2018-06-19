@@ -139,16 +139,20 @@ esperaNavio navio naviosAlocadosBerco | atendido navio berco infoPorto = show(te
 --------------------------------------------------------------------------------
 -- RETORNA QUAIS NAVIOS PODERAM ATRACAR DE ACORDO COM O TEMPO DE ATENDIMENTO  --
 --------------------------------------------------------------------------------
-podeAtracar::ListaDeNavios->VetorAtendimento->ListaDeNavios
-podeAtracar listaNavios vetorAtendimento | somatorio (vetor_cargas listaNavios) > 
+podeAtracar::ListaDeNavios->VetorAtendimento->Int->ListaDeNavios
+podeAtracar navios vetorAtendimento tempoAbertoBerco | somatorio (vetorAtendimento) > tempoAbertoBerco = caseMaior
+                                                          | otherwise = navios
+                                                            where
+                                                                caseMaior = podeAtracar (init navios) (init vetorAtendimento) tempoAbertoBerco
 --------------------------------------------------------------------------------
 -- FUNCAO QUE RETORNA UMA TRIPLA COM TODAS AS INFORMACOES DE ATENDIMENTO DADO --
 -- UM BERCO E UMA LISTA DE NAVIOS                                             --
 --------------------------------------------------------------------------------
-constroiAlocacaoBerco::Berco->ListaDeNavios->(Berco,Int,[(Int,Int,Int)]])
-constroiAlocacaoBerco berco navios = (berco, qnt_total, dadosNavio)
+--constroiAlocacaoBerco::Berco->ListaDeNavios->(Berco,Int,[(Int,Int,Int)]])
+constroiAlocacaoBerco berco navios infoPorto = (berco, qnt_total, naviosAtracados)
                                 where
                                     naviosOrdenados = filaNavios navios
                                     candidatos = naviosCandidatos berco naviosOrdenados
-                                    podeAtracar = 
-                                    qnt_total = somatorio (vetor_cargas podeAtracar)
+                                    vetorAtendimento = [ tempoAtendimento x berco infoPorto | x <- naviosOrdenados ]
+                                    naviosAtracados = podeAtracar naviosOrdenados vetorAtendimento (tempoAberto berco)
+                                    qnt_total = somatorio (vetor_cargas naviosAtracados)
