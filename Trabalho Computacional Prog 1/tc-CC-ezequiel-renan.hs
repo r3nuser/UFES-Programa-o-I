@@ -137,22 +137,44 @@ esperaNavio navio naviosAlocadosBerco | atendido navio berco infoPorto = show(te
                                               navios = snd naviosAlocadosBerco
                                               fila = filaNavios (concatNavio navio navios)
 --------------------------------------------------------------------------------
+-- DADO UM NUMERO INTEIRO, SE FOR POSITIVO RETORNA 0                          --
+--------------------------------------------------------------------------------
+nonNegative::Int->Int
+nonNegative number = if number > 0 then number else 0
+--------------------------------------------------------------------------------
+-- RETORNA QUAL TEMPO OCIOSO NETRE NAVIOS                                     --
+--------------------------------------------------------------------------------
+ociosoEntreNavios::ListaDeNavios->Berco->ListaTempoAtendimento->Int->Int
+ociosoEntreNavios navios berco infoPorto h | length navios < 2 = h
+                                           | otherwise = ociosoEntreNavios (tail navios) berco infoPorto (h + ociosoDoisNavios)
+                                             where 
+                                                ociosoDoisNavios = nonNegative(get_chegada (navios!!1) - (get_chegada (navios!!0) + (tempoAtendimento (navios!!0) berco infoPorto)))
+                                            
+                                               
+--------------------------------------------------------------------------------
 -- RETORNA QUAIS NAVIOS PODERAM ATRACAR DE ACORDO COM O TEMPO DE ATENDIMENTO  --
 --------------------------------------------------------------------------------
-podeAtracar::ListaDeNavios->VetorAtendimento->Int->ListaDeNavios
-podeAtracar navios vetorAtendimento tempoAbertoBerco | somatorio (vetorAtendimento) > tempoAbertoBerco = caseMaior
-                                                          | otherwise = navios
-                                                            where
-                                                                caseMaior = podeAtracar (init navios) (init vetorAtendimento) tempoAbertoBerco
+podeAtracar::ListaDeNavios->VetorAtendimento->Berco->ListaDeNavios
+podeAtracar navios vetorAtendimento berco | (somatorio (vetorAtendimento)+ocioso) > (tempoAberto berco) = caseMaior
+                                                     | otherwise = navios
+                                                        where
+                                                           caseMaior = podeAtracar (init navios) (init vetorAtendimento) berco
+                                                           ocioso = ociosoEntreNavios navios berco infoPorto 0
+--------------------------------------------------------------------------------
+-- RETORNA QUAL HORARIO DE ATENDIMENTO DE CADA NAVIO ATRACADO                 --
+--------------------------------------------------------------------------------
+--horariosAtendimento::ListaDeNavios->[(Int,Int,Int)]
+
 --------------------------------------------------------------------------------
 -- FUNCAO QUE RETORNA UMA TRIPLA COM TODAS AS INFORMACOES DE ATENDIMENTO DADO --
 -- UM BERCO E UMA LISTA DE NAVIOS                                             --
 --------------------------------------------------------------------------------
 --constroiAlocacaoBerco::Berco->ListaDeNavios->(Berco,Int,[(Int,Int,Int)]])
-constroiAlocacaoBerco berco navios infoPorto = (berco, qnt_total, naviosAtracados)
-                                where
-                                    naviosOrdenados = filaNavios navios
-                                    candidatos = naviosCandidatos berco naviosOrdenados
-                                    vetorAtendimento = [ tempoAtendimento x berco infoPorto | x <- naviosOrdenados ]
-                                    naviosAtracados = podeAtracar naviosOrdenados vetorAtendimento (tempoAberto berco)
-                                    qnt_total = somatorio (vetor_cargas naviosAtracados)
+--constroiAlocacaoBerco berco navios infoPorto = (berco, qnt_total, navioAtendido)
+--                                where
+--                                    naviosOrdenados = filaNavios navios
+--                                    candidatos = naviosCandidatos berco naviosOrdenados
+--                                    vetorAtendimento = [ tempoAtendimento x berco infoPorto | x <- naviosOrdenados ]
+--                                    naviosAtracados = podeAtracar candidatos vetorAtendimento berco
+--                                    qnt_total = somatorio (vetor_cargas naviosAtracados)
+                                    --navioAtendido = horariosAtendimento naviosAtracados
