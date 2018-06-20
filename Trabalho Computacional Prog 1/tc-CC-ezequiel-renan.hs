@@ -161,20 +161,37 @@ podeAtracar navios vetorAtendimento berco | (somatorio (vetorAtendimento)+ocioso
                                                            caseMaior = podeAtracar (init navios) (init vetorAtendimento) berco
                                                            ocioso = ociosoEntreNavios navios berco infoPorto 0
 --------------------------------------------------------------------------------
+-- RETORNA TERCEIRO ELEMENTO DE UMA TRIPLA DE INTEIROS                        --
+--------------------------------------------------------------------------------
+trd::(Int,Int,Int)->Int
+trd (x,y,z) = z
+--------------------------------------------------------------------------------
+-- RETORNA O MAIOR VALOR ENTRE DOIS VALORES                                   --
+--------------------------------------------------------------------------------
+maior::Int->Int->Int
+maior a b = if a > b then a else b
+--------------------------------------------------------------------------------
 -- RETORNA QUAL HORARIO DE ATENDIMENTO DE CADA NAVIO ATRACADO                 --
 --------------------------------------------------------------------------------
---horariosAtendimento::ListaDeNavios->[(Int,Int,Int)]
-
+horariosAtendimento::(ListaDeNavios,VetorAtendimento)->[(Int,Int,Int)]->[(Int,Int,Int)]
+horariosAtendimento (navios,atendimento) n | null navios = n
+                                           | n == [] = horariosAtendimento (tail navios, tail atendimento) ((id_navio (navios!!0), (get_chegada (navios!!0)), (get_chegada (navios!!0)) + (atendimento!!0)  ):n)
+                                           | otherwise = horariosAtendimento (tail navios, tail atendimento) (n++[(id_navio navio_atual, chegada,saida)])
+                                                       where
+                                                           navio_atual = navios!!0
+                                                           tempo_atendimento = atendimento!!0
+                                                           chegada = maior (trd (last n)) (get_chegada navio_atual)
+                                                           saida = chegada + tempo_atendimento
 --------------------------------------------------------------------------------
 -- FUNCAO QUE RETORNA UMA TRIPLA COM TODAS AS INFORMACOES DE ATENDIMENTO DADO --
 -- UM BERCO E UMA LISTA DE NAVIOS                                             --
 --------------------------------------------------------------------------------
---constroiAlocacaoBerco::Berco->ListaDeNavios->(Berco,Int,[(Int,Int,Int)]])
---constroiAlocacaoBerco berco navios infoPorto = (berco, qnt_total, navioAtendido)
---                                where
---                                    naviosOrdenados = filaNavios navios
---                                    candidatos = naviosCandidatos berco naviosOrdenados
---                                    vetorAtendimento = [ tempoAtendimento x berco infoPorto | x <- naviosOrdenados ]
---                                    naviosAtracados = podeAtracar candidatos vetorAtendimento berco
---                                    qnt_total = somatorio (vetor_cargas naviosAtracados)
-                                    --navioAtendido = horariosAtendimento naviosAtracados
+constroiAlocacaoBerco::Berco->ListaDeNavios->ListaTempoAtendimento->(Berco,Int,[(Int,Int,Int)])
+constroiAlocacaoBerco berco navios infoPorto = (berco, qnt_total, navioAtendido)
+                                where
+                                    naviosOrdenados = filaNavios navios
+                                    candidatos = naviosCandidatos berco naviosOrdenados
+                                    vetorAtendimento = [ tempoAtendimento x berco infoPorto | x <- candidatos ]
+                                    naviosAtracados = podeAtracar candidatos vetorAtendimento berco
+                                    qnt_total = somatorio (vetor_cargas naviosAtracados)
+                                    navioAtendido = horariosAtendimento (naviosAtracados,[ tempoAtendimento x berco infoPorto | x <- naviosAtracados ]) [] 
