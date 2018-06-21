@@ -1,3 +1,11 @@
+--------------------------------------------------------------------------------
+-- TRABALHO COMPUTACIONAL - 2018/1 - Prof: Claudia Boeres                     -- 
+--------------------------------------------------------------------------------
+-- Participante 1: Ezequiel Schneider Reinholtz                               --
+-- Participante 2: Renan Moreira Gomes                                        --
+-- Data: 29/06/2018                                                           --
+--------------------------------------------------------------------------------
+
 import BercoToolbox
 import ListaToolbox
 import NavioToolbox
@@ -40,8 +48,8 @@ tempoAtendimento navio berco infoPorto = (tempoAtendimentoBerco berco infoPorto)
 --------------------------------------------------------------------------------
 -- FUNCAO QUE INFORMA OS NAVIOS QUE PODEM ATACAR EM UM BERCO ESPECIFICO       --
 --------------------------------------------------------------------------------
-naviosCandidatos::Berco->ListaDeNavios->ListaDeNavios
-naviosCandidatos berco listaNavios = [ y | y <- listaNavios, atendido y berco infoPorto]
+naviosCandidatos::Berco->ListaDeNavios->ListaTempoAtendimento->ListaDeNavios
+naviosCandidatos berco listaNavios infoPorto = [ y | y <- listaNavios, atendido y berco infoPorto]
 --------------------------------------------------------------------------------
 -- DADO UM NAVIO EM UMA LISTA DE NAVIOS, PROCURA O ELEMENTO ANTERIOR          --
 --------------------------------------------------------------------------------
@@ -49,7 +57,7 @@ searchAnterior::Navio->ListaDeNavios->Navio
 searchAnterior navio fila | fila!!1==navio = head fila
                           | otherwise = searchAnterior navio (tail fila)
 --------------------------------------------------------------------------------
--- FUNCAO QUE RETORNA O TEMPO DE ESPERA DE UM NAVIO QUE ->PODE-< SER ALOCADO  --
+-- FUNCAO QUE RETORNA O TEMPO DE ESPERA DE UM NAVIO QUE ->PODE<- SER ALOCADO  --
 --------------------------------------------------------------------------------
 tempoEspera::Navio->ListaDeNavios->Berco->ListaTempoAtendimento->Int
 tempoEspera navio fila berco infoPorto  | tempo < 0 = 0
@@ -68,9 +76,9 @@ tempoEspera navio fila berco infoPorto  | tempo < 0 = 0
 --------------------------------------------------------------------------------
 atendido::Navio->Berco->ListaTempoAtendimento->Bool
 atendido navio berco atendimento = tempoAtendimento/=0 && get_chegada navio >= get_abertura berco
-                                    where 
-                                        tempoAtendimento = (atendimento!!(id_berco berco - 1))!!(id_navio navio - 1)
---------------------------------------------------------------------------------
+                                   where 
+                                       tempoAtendimento = (atendimento!!(id_berco berco - 1))!!(id_navio navio - 1)
+                                        --------------------------------------------------------------------------------
 -- DADO UMA LISTA DE NAVIOS, ESSA FUNCAO RETORNA A ORDEM DE CHEGADA DO MESMO  --
 --                                                                            --
 -- FUNCIONAMENTO DA FUNÇÃO:                                                   --
@@ -81,61 +89,61 @@ atendido navio berco atendimento = tempoAtendimento/=0 && get_chegada navio >= g
 filaNavios::ListaDeNavios->ListaDeNavios
 filaNavios [] = []
 filaNavios (s:xs) = inicio_meio ++ [s] ++ meio_fim
-                   where
-                       inicio_meio = filaNavios [ x | x <- xs,get_chegada x < get_chegada s]
-                       meio_fim = filaNavios [ x | x <- xs,get_chegada x >= get_chegada s]
+                    where
+                        inicio_meio = filaNavios [ x | x <- xs,get_chegada x < get_chegada s]
+                        meio_fim = filaNavios [ x | x <- xs,get_chegada x >= get_chegada s]
 --------------------------------------------------------------------------------
 -- FUNCAO QUE CALCULA A JANELA DE TEMPO OCIOSO NO BERCO DENTRO DE SUA JANELA  --
 -- DE TRABALHO.                                                               --
 --------------------------------------------------------------------------------
-tempoOcioso::Berco->NaviosNoBerco->Int
-tempoOcioso berco naviosAlocadosBerco = tempoAberto berco - somatorio listaAtendimentoNavio
-                                       where
-                                           listaAtendimentoNavio = [tempoAtendimento x berco infoPorto | x <- navios ]
-                                               where
-                                                   navios = snd(naviosAlocadosBerco)
+tempoOcioso::Berco->NaviosNoBerco->ListaTempoAtendimento->Int
+tempoOcioso berco naviosAlocadosBerco infoPorto = tempoAberto berco - somatorio listaAtendimentoNavio
+                                                  where
+                                                      listaAtendimentoNavio = [tempoAtendimento x berco infoPorto | x <- navios ]
+                                                       where
+                                                           navios = snd(naviosAlocadosBerco)
 --------------------------------------------------------------------------------
 -- FUNCAO QUE RETORNA UMA LISTA DE TEMPOS OCIOSOS DE UMA LISTA DE BERCOS E    --
 -- UMA LISTA DE NAVIOS NO BERCO                                               --
 --------------------------------------------------------------------------------
-listaTempoOcioso::ListaDeBercos->NaviosAlocadosBerco->[(Berco,Int)]
-listaTempoOcioso bercos naviosAlocados = [ (berco, tempo) | berco<-bercos, tempo<-[tempoOcioso berco (naviosAlocados!!(id_berco berco - 1))] ]
+listaTempoOcioso::ListaDeBercos->NaviosAlocadosBerco->ListaTempoAtendimento->[(Berco,Int)]
+listaTempoOcioso bercos naviosAlocados infoPorto = [ (berco, tempo) | berco<-bercos, tempo<-[tempoOcioso berco (naviosAlocados!!(id_berco berco - 1)) infoPorto] ]
 --------------------------------------------------------------------------------
 -- FUNCAO QUE CALCULA QUAL BERCO TEM O MAIOR TEMPO OCIOSO E RETORNA SEU ID    --
 --------------------------------------------------------------------------------
-bercoOcioso::ListaDeBercos->NaviosAlocadosBerco->Int
-bercoOcioso bercos naviosAlocadosBerco = id_berco(fst([ x | x <- lista, maximo listaMapeada == snd x]!!0))
-                                           where
-                                              lista = listaTempoOcioso listaBercos naviosAlocadosBerco
-                                              listaMapeada = map snd lista
+bercoOcioso::ListaDeBercos->NaviosAlocadosBerco->ListaTempoAtendimento->Int
+bercoOcioso bercos naviosAlocadosBerco infoPorto = id_berco(fst([ x | x <- lista, maximo listaMapeada == snd x]!!0))
+                                         where
+                                             lista = listaTempoOcioso listaBercos naviosAlocadosBerco infoPorto
+                                             listaMapeada = map snd lista
 --------------------------------------------------------------------------------
 -- FUNCAO QUE INFORMA OS NAVIOS QUE PODEM ATRACAR EM UMA LISTA DE BERCOS      --
 --------------------------------------------------------------------------------
-naviosCandidatosBerco::ListaDeBercos->ListaDeNavios->[(Int,ListaDeNavios)]
-naviosCandidatosBerco bercos listaNavios = [ (id_berco x, naviosCandidatos x listaNavios) | x <- bercos ]
+naviosCandidatosBerco::ListaDeBercos->ListaDeNavios->ListaTempoAtendimento->[(Int,ListaDeNavios)]
+naviosCandidatosBerco bercos listaNavios infoPorto = [ (id_berco x, naviosCandidatos x listaNavios infoPorto) | x <- bercos ]
 --------------------------------------------------------------------------------
 -- FUNCAO QUE RETORNA SE UM DADO NAVIO PODE SER ATENDIDO NO BERCO, QUANTIDADE --
 -- TOTAL DE PRODUTOS CARREGADOS NO NAVIO E OS NAVIOS QUE FORAM ALOCADOS       --
 --------------------------------------------------------------------------------
 insereNavioBerco::Navio->NaviosNoBerco->(Bool, Int, ListaDeNavios)
 insereNavioBerco navio naviosAlocadosBerco = (isAtendido, qnt_total, filaNavios naviosAlocados)
-                                            where 
-                                              berco = fst naviosAlocadosBerco
-                                              navios = snd naviosAlocadosBerco
-                                              isAtendido = atendido navio berco infoPorto
-                                              naviosAlocados | isAtendido = concatNavio navio navios  
-                                                             | otherwise = navios
-                                              qnt_total = somatorio (vetor_cargas naviosAlocados)
+                                             where 
+                                                 berco = fst naviosAlocadosBerco
+                                                 navios = snd naviosAlocadosBerco
+                                                 isAtendido = atendido navio berco infoPorto
+                                                 naviosAlocados | isAtendido = concatNavio navio navios  
+                                                                | otherwise = navios
+                                                 qnt_total = somatorio (vetor_cargas naviosAlocados)
 --------------------------------------------------------------------------------
 -- FUNCAO QUE RETORNA O TEMPO DE ESPERA DO NAVIO CASO ELE TENHA SIDO ALOCADO  --
 --------------------------------------------------------------------------------
 esperaNavio::Navio->NaviosNoBerco->String
 esperaNavio navio naviosAlocadosBerco | atendido navio berco infoPorto = show(tempoEspera navio fila berco infoPorto)
                                       | otherwise = "O navio "++show (id_navio navio)++" nao foi alocado no berco "++show (id_berco berco)
-                                          where
-                                              berco = fst naviosAlocadosBerco
-                                              navios = snd naviosAlocadosBerco
-                                              fila = filaNavios (concatNavio navio navios)
+                                        where
+                                            berco = fst naviosAlocadosBerco
+                                            navios = snd naviosAlocadosBerco
+                                            fila = filaNavios (concatNavio navio navios)
 --------------------------------------------------------------------------------
 -- DADO UM NUMERO INTEIRO, SE FOR POSITIVO RETORNA 0                          --
 --------------------------------------------------------------------------------
@@ -148,7 +156,7 @@ ociosoEntreNavios::ListaDeNavios->Berco->ListaTempoAtendimento->Int->Int
 ociosoEntreNavios navios berco infoPorto h | length navios < 2 = h
                                            | otherwise = ociosoEntreNavios (tail navios) berco infoPorto (h + ociosoDoisNavios)
                                              where 
-                                                ociosoDoisNavios = nonNegative(get_chegada (navios!!1) - (get_chegada (navios!!0) + (tempoAtendimento (navios!!0) berco infoPorto)))
+                                                 ociosoDoisNavios = nonNegative(get_chegada (navios!!1) - (get_chegada (navios!!0) + (tempoAtendimento (navios!!0) berco infoPorto)))
                                             
                                                
 --------------------------------------------------------------------------------
@@ -156,10 +164,10 @@ ociosoEntreNavios navios berco infoPorto h | length navios < 2 = h
 --------------------------------------------------------------------------------
 podeAtracar::ListaDeNavios->VetorAtendimento->Berco->ListaDeNavios
 podeAtracar navios vetorAtendimento berco | (somatorio (vetorAtendimento)+ocioso) > (tempoAberto berco) = caseMaior
-                                                     | otherwise = navios
-                                                        where
-                                                           caseMaior = podeAtracar (init navios) (init vetorAtendimento) berco
-                                                           ocioso = ociosoEntreNavios navios berco infoPorto 0
+                                          | otherwise = navios
+                                            where
+                                                caseMaior = podeAtracar (init navios) (init vetorAtendimento) berco
+                                                ocioso = ociosoEntreNavios navios berco infoPorto 0
 --------------------------------------------------------------------------------
 -- RETORNA TERCEIRO ELEMENTO DE UMA TRIPLA DE INTEIROS                        --
 --------------------------------------------------------------------------------
@@ -177,21 +185,21 @@ horariosAtendimento::(ListaDeNavios,VetorAtendimento)->[(Int,Int,Int)]->[(Int,In
 horariosAtendimento (navios,atendimento) n | null navios = n
                                            | n == [] = horariosAtendimento (tail navios, tail atendimento) ((id_navio (navios!!0), (get_chegada (navios!!0)), (get_chegada (navios!!0)) + (atendimento!!0)  ):n)
                                            | otherwise = horariosAtendimento (tail navios, tail atendimento) (n++[(id_navio navio_atual, chegada,saida)])
-                                                       where
-                                                           navio_atual = navios!!0
-                                                           tempo_atendimento = atendimento!!0
-                                                           chegada = maior (trd (last n)) (get_chegada navio_atual)
-                                                           saida = chegada + tempo_atendimento
+                                                         where
+                                                             navio_atual = navios!!0
+                                                             tempo_atendimento = atendimento!!0
+                                                             chegada = maior (trd (last n)) (get_chegada navio_atual)
+                                                             saida = chegada + tempo_atendimento
 --------------------------------------------------------------------------------
 -- FUNCAO QUE RETORNA UMA TRIPLA COM TODAS AS INFORMACOES DE ATENDIMENTO DADO --
 -- UM BERCO E UMA LISTA DE NAVIOS                                             --
 --------------------------------------------------------------------------------
 constroiAlocacaoBerco::Berco->ListaDeNavios->ListaTempoAtendimento->(Berco,Int,[(Int,Int,Int)])
 constroiAlocacaoBerco berco navios infoPorto = (berco, qnt_total, navioAtendido)
-                                where
-                                    naviosOrdenados = filaNavios navios
-                                    candidatos = naviosCandidatos berco naviosOrdenados
-                                    vetorAtendimento = [ tempoAtendimento x berco infoPorto | x <- candidatos ]
-                                    naviosAtracados = podeAtracar candidatos vetorAtendimento berco
-                                    qnt_total = somatorio (vetor_cargas naviosAtracados)
-                                    navioAtendido = horariosAtendimento (naviosAtracados,[ tempoAtendimento x berco infoPorto | x <- naviosAtracados ]) [] 
+                                               where
+                                                   naviosOrdenados = filaNavios navios
+                                                   candidatos = naviosCandidatos berco naviosOrdenados infoPorto
+                                                   vetorAtendimento = [ tempoAtendimento x berco infoPorto | x <- candidatos ]
+                                                   naviosAtracados = podeAtracar candidatos vetorAtendimento berco
+                                                   qnt_total = somatorio (vetor_cargas naviosAtracados)
+                                                   navioAtendido = horariosAtendimento (naviosAtracados,[ tempoAtendimento x berco infoPorto | x <- naviosAtracados ]) [] 

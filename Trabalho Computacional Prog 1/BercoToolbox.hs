@@ -1,3 +1,11 @@
+--------------------------------------------------------------------------------
+-- TRABALHO COMPUTACIONAL - 2018/1 - Prof: Claudia Boeres                     -- 
+--------------------------------------------------------------------------------
+-- Participante 1: Ezequiel Schneider Reinholtz                               --
+-- Participante 2: Renan Moreira Gomes                                        --
+-- Data: 29/06/2018                                                           --
+--------------------------------------------------------------------------------
+
 module BercoToolbox(
     tempoAtendimentoBerco,
     tempoAberto,

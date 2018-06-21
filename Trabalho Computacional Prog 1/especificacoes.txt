@@ -104,3 +104,60 @@ Resposta: ((1,4,20), 110, [(4,4,8), (1,8,9), (2,9,15)]
 
 -------------------
 
+
+Forma de Entrega e observações importantes:
+
+O trabalho deve ser feito em dupla.
+
+Devem ser construídos exemplos além do disponível neste enunciado  (mínimo de 3 e
+máximo de 5). Os arquivos de entrada devem ser construídos pela própria dupla, para
+teste, e devem ser enviados juntos com o código do trabalho.
+
+O trabalho com erros de sintaxe não será corrigido.
+
+Trabalhos evidentemente iguais e/ou com plágio receberão nota ZERO.
+
+Forma de entrega:
+ Compactar o script do seu programa Haskell com o nome tc-CC-
+nome.hs assim como seus módulos em um arquivo compactado nomeado por tc-CC-
+nome.zip.   Enviar   por   e-mail   o   arquivo   compactado   para  
+boeres@inf.ufes.br
+  e
+thiagoborges533@gmail.com
+. Tanto no nome do script principal, quanto no nome do
+arquivo compactado, s
+ubstitua o termo  
+nome
+  pelo primeiro e último nomes dos
+componentes do grupo. Exemplo: para o grupo formado por Julio Cabral e João Silva,
+o nome do arquivo será tc-CC-juliocabral-joaosilva.hs. Não usar caracteres especiais
+tais como ç, ã, õ, é, etc etc no nome do arquivo.
+
+O  
+assunto   do   e-mail   enviado
+  deverá conter a sigla do curso (CC), o nome da
+disciplina abreviada (ProgI), além do nome de cada componente da dupla, no formado
+explicado no item anterior, e o semestre letivo. Desta forma, deve seguir o seguinte
+formato: CC:<disciplina>:<nome1>:<nome2>:20181. Exemplo: para o grupo formado
+por Julio Cabral e João Silva, o assunto do e-mail deve ser CC:ProgI:juliocabral-
+joaosilva:20181.
+
+Faça o cabeçalho do seu script:
+ Coloque como comentário no topo do seu script, os
+nomes dos participantes da dupla, a data e o título do trabalho em todos os scripts. 
+
+Avaliação individual relativa ao projeto de programação pode ser realizada através de
+entrevista ou teste (a ser decidido posteriormente). No caso de entrevista, será
+avaliada a fluência de cada estudante quanto ao processo de desenvolvimento do
+projeto de programação, principalmente quanto ao que aprendeu, como foi construída
+a solução e a participação nas atividades realizadas pelo grupo, através de entrevista
+a ser marcada. A nota obtida na entrevista é multiplicada pela nota atribuída ao
+código. No caso de teste, uma questão sobre o trabalho será aplicada no laboratório e
+um peso associado a essa questão será multiplicado pela nota do trabalho.
+
+O recebimento dos trabalhos é automatizado. Siga as instruções à risca pois algum
+erro na submissão pode inviabilizar a entrega do seu trabalho. Não deixe para enviar
+seu trabalho nos momentos finais de seu prazo. É comum a ocorrência de problemas
+em virtude de erros na submissão. Logo, enviem com algumas horas de antecedência
+para que haja tempo hábil para eventuais correções. 
+
