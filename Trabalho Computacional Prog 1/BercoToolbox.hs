@@ -24,7 +24,8 @@ module BercoToolbox(
     tempoAtendimentoBerco,
     tempoAberto,
     id_berco,
-    get_abertura
+    get_abertura,
+    get_fechamento
 )where
 --------------------------------------------------------------------------------
 -- Importacoes:                                                               --
@@ -56,4 +57,10 @@ tempoAberto (id, abertura, fechamento) = fechamento - abertura
 --------------------------------------------------------------------------------
 get_abertura::Berco->Int
 get_abertura (id, abertura, fechamento) = abertura
+--------------------------------------------------------------------------------
+-- FUNCAO QUE RETORNA A HORA DE FECHAMENTO DO BERCO                             --
+--------------------------------------------------------------------------------
+get_fechamento::Berco->Int
+get_fechamento (id, abertura, fechamento) = fechamento
+
 

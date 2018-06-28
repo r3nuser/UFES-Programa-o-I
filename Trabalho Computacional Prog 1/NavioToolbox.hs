@@ -15,6 +15,7 @@
 -- - id_navio : Retorna o id do navio                                         --
 -- - get_navio : Retorna o navio pelo id em uma lista de navios               --
 -- - get_chegada : Retorna a hora de chegada do navio                         --
+-- - get_saida : Retorna a hora de saida do navio                             --
 -- - concatNavio : Concatena um navio em uma lista de navios                  --
 -- - vetor_cargas : Retorna um vetor de cargas de uma lista de navios         --
 --                                                                            --
@@ -26,6 +27,7 @@ module NavioToolbox(
     id_navio,
     get_navio,
     get_chegada,
+    get_saida,
     concatNavio,
     vetor_cargas
 )where
@@ -54,6 +56,11 @@ get_navio listaDeNavios id = listaDeNavios!!(id - 1)
 --------------------------------------------------------------------------------
 get_chegada::Navio->Int
 get_chegada (id, chegada, partida, qnt) = chegada
+--------------------------------------------------------------------------------
+-- FUNCAO QUE RETORNA A HORA DE SAIDA DO NAVIO                              --
+--------------------------------------------------------------------------------
+get_saida::Navio->Int
+get_saida (id, chegada, partida, qnt) = partida
 --------------------------------------------------------------------------------
 -- FUNCAO QUE RETORNA A CARGA DO NAVIO                                        --
 --------------------------------------------------------------------------------

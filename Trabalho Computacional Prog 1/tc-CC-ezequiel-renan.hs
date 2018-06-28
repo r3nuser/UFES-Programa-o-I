@@ -38,10 +38,13 @@ naviosAlocadosBerco = [naviosAlocadosBerco1, naviosAlocadosBerco2]
 --------------------------------------------------------------------------------
 intervalo::Int->Int->Int->Bool
 intervalo a b c | a > b = a >= c && b <= c
-                    | otherwise = a <= c && b >= c 
+                | otherwise = a <= c && b >= c 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 -- FUNCAO QUE RETORNA O TEMPO DE ATENDIMENTO DE UM NAVIO NO BERCO             --
+--------------------------------------------------------------------------------
+-- A função busca pelo id do navio, seu respectivo tempo de atendimento no    --
+-- berco.                                                                     --
 --------------------------------------------------------------------------------
 tempoAtendimento::Navio->Berco->ListaTempoAtendimento->Int
 tempoAtendimento navio berco infoPorto = (tempoAtendimentoBerco berco infoPorto)!!(id_navio navio - 1)
@@ -68,17 +71,20 @@ tempoEspera navio fila berco infoPorto  | tempo < 0 = 0
                                               chegadaAtual = get_chegada navio
                                               tempo = ((tempoAtendimento navioAnterior berco infoPorto) + chegadaAnterior) - chegadaAtual
 --------------------------------------------------------------------------------
--- DADO UM NAVIO, UM BERCO E AS INFORMAÇÕES DOS TEMPOS DE ATENDIMENTO DOS     --
--- NAVIOS NOS BERÇOS DO PORTO, A FUNCAO VERIFICA SE O NAVIO PODE SER ATENDIDO --
---                                                                            --
--- PARAMETRO DE AVALIACAOO:                                                   --
--- SE O TEMPO DE ATENDIMENTO FOR NULO O NAVIO NÃO PODERA ATRACAR NO BERCO.    --                                                   --
+-- FUNCAO QUE RETORNA SE O NAVIO PODE SER ATENDIDO NO BERCO                   --
+--------------------------------------------------------------------------------
+-- A função recebe o navio, o berço e lista do tempo de atendimento e apartir --
+-- daí, ela verifica se o tempo de atendimento é diferente de 0 e se a        --
+-- chegada do navio é maior ou igual a abertura do berco e se a saida do navio--
+-- é menor ou igual a hora de fechamento do berco                             --
 --------------------------------------------------------------------------------
 atendido::Navio->Berco->ListaTempoAtendimento->Bool
-atendido navio berco atendimento = tempoAtendimento/=0 && get_chegada navio >= get_abertura berco
+atendido navio berco atendimento = tempoAtendimento/=0 && chegadaAbertura && saidaFechamento
                                    where 
                                        tempoAtendimento = (atendimento!!(id_berco berco - 1))!!(id_navio navio - 1)
-                                        --------------------------------------------------------------------------------
+                                       chegadaAbertura = get_chegada navio >= get_abertura berco
+                                       saidaFechamento = get_saida navio <= get_fechamento berco
+--------------------------------------------------------------------------------
 -- DADO UMA LISTA DE NAVIOS, ESSA FUNCAO RETORNA A ORDEM DE CHEGADA DO MESMO  --
 --                                                                            --
 -- FUNCIONAMENTO DA FUNÇÃO:                                                   --
@@ -95,6 +101,8 @@ filaNavios (s:xs) = inicio_meio ++ [s] ++ meio_fim
 --------------------------------------------------------------------------------
 -- FUNCAO QUE CALCULA A JANELA DE TEMPO OCIOSO NO BERCO DENTRO DE SUA JANELA  --
 -- DE TRABALHO.                                                               --
+-- A função pega o somatório do tempo de atendimento dos navios alocados no   --
+-- berço e este valor é subtraido do tempo total de funcionamento do berco    --
 --------------------------------------------------------------------------------
 tempoOcioso::Berco->NaviosNoBerco->ListaTempoAtendimento->Int
 tempoOcioso berco naviosAlocadosBerco infoPorto = tempoAberto berco - somatorio listaAtendimentoNavio
@@ -110,6 +118,8 @@ listaTempoOcioso::ListaDeBercos->NaviosAlocadosBerco->ListaTempoAtendimento->[(B
 listaTempoOcioso bercos naviosAlocados infoPorto = [ (berco, tempo) | berco<-bercos, tempo<-[tempoOcioso berco (naviosAlocados!!(id_berco berco - 1)) infoPorto] ]
 --------------------------------------------------------------------------------
 -- FUNCAO QUE CALCULA QUAL BERCO TEM O MAIOR TEMPO OCIOSO E RETORNA SEU ID    --
+-- A função pega o maximo do segundo elemento de cada tupla e retorna o id do --
+-- berço correspondente daquela tupla.                                        --
 --------------------------------------------------------------------------------
 bercoOcioso::ListaDeBercos->NaviosAlocadosBerco->ListaTempoAtendimento->Int
 bercoOcioso bercos naviosAlocadosBerco infoPorto = id_berco(fst([ x | x <- lista, maximo listaMapeada == snd x]!!0))
@@ -118,12 +128,21 @@ bercoOcioso bercos naviosAlocadosBerco infoPorto = id_berco(fst([ x | x <- lista
                                              listaMapeada = map snd lista
 --------------------------------------------------------------------------------
 -- FUNCAO QUE INFORMA OS NAVIOS QUE PODEM ATRACAR EM UMA LISTA DE BERCOS      --
+-- A função utiliza o "naviosCandidatos" que retorna uma lista de navios que  --
+-- podem ser alocados no berco, e organiza em uma tupla com o id do berco e a --
+-- lista em si.                                                               --
 --------------------------------------------------------------------------------
 naviosCandidatosBerco::ListaDeBercos->ListaDeNavios->ListaTempoAtendimento->[(Int,ListaDeNavios)]
 naviosCandidatosBerco bercos listaNavios infoPorto = [ (id_berco x, naviosCandidatos x listaNavios infoPorto) | x <- bercos ]
 --------------------------------------------------------------------------------
 -- FUNCAO QUE RETORNA SE UM DADO NAVIO PODE SER ATENDIDO NO BERCO, QUANTIDADE --
 -- TOTAL DE PRODUTOS CARREGADOS NO NAVIO E OS NAVIOS QUE FORAM ALOCADOS       --
+-- A função avalia se o navio pode ser atendido ou não, após isso de acordo   --
+-- com o resultado anterior faz a somatoria das cargas dos navios e mostra    --
+-- os navios ordenados.                                                       --
+-- OBS:: No primeiro argumento, ao invez de retornar um Int, retornamos um    --
+-- valor booleano, indicando True se o navio pode ser alocado e False caso o  --
+-- navio não possa.                                                           --
 --------------------------------------------------------------------------------
 insereNavioBerco::Navio->NaviosNoBerco->(Bool, Int, ListaDeNavios)
 insereNavioBerco navio naviosAlocadosBerco = (isAtendido, qnt_total, filaNavios naviosAlocados)
@@ -180,6 +199,9 @@ maior::Int->Int->Int
 maior a b = if a > b then a else b
 --------------------------------------------------------------------------------
 -- RETORNA QUAL HORARIO DE ATENDIMENTO DE CADA NAVIO ATRACADO                 --
+-- Dada uma tupla contendo uma lista de navios e seus respectivos tempos de   --
+-- atendimento, realiza recursivamente o calculo de chegada do navio e sua    --
+-- saida de acordo com o tempo de atendimento.                                --
 --------------------------------------------------------------------------------
 horariosAtendimento::(ListaDeNavios,VetorAtendimento)->[(Int,Int,Int)]->[(Int,Int,Int)]
 horariosAtendimento (navios,atendimento) n | null navios = n
@@ -193,6 +215,17 @@ horariosAtendimento (navios,atendimento) n | null navios = n
 --------------------------------------------------------------------------------
 -- FUNCAO QUE RETORNA UMA TRIPLA COM TODAS AS INFORMACOES DE ATENDIMENTO DADO --
 -- UM BERCO E UMA LISTA DE NAVIOS                                             --
+-- Primeiramente é realizada uma ordenação da lista de navios que foi dada    --
+-- como entrada. Após isso utilizados a funcao "naviosCandidatos" para avaliar--
+-- quais navios dessa lista são candidatos a alocação.                        --
+-- Logo após, utilizamos a função "podeAtracar" para filtrar de fato quem     --
+-- poderá ser atendido no respectivo berço, respeitando o tempo de atendimento--
+-- do navio e o tempo de funcionamento do berço.                              --
+-- Após isso, realizamos o somatório de cargas dos navios que atracaram.      --
+-- Por fim, é utilizada a função "horariosAtendimento" para calcular o tempo  --
+-- de inicio e o final de carregamento dos navios, para então, dar como       --
+-- resultado uma tiṕla contendo o berço, somatório das cargas e os navios     --
+-- alocados com o id, tempo de entrada e tempo de saida.                      --
 --------------------------------------------------------------------------------
 constroiAlocacaoBerco::Berco->ListaDeNavios->ListaTempoAtendimento->(Berco,Int,[(Int,Int,Int)])
 constroiAlocacaoBerco berco navios infoPorto = (berco, qnt_total, navioAtendido)
@@ -202,4 +235,4 @@ constroiAlocacaoBerco berco navios infoPorto = (berco, qnt_total, navioAtendido)
                                                    vetorAtendimento = [ tempoAtendimento x berco infoPorto | x <- candidatos ]
                                                    naviosAtracados = podeAtracar candidatos vetorAtendimento berco
                                                    qnt_total = somatorio (vetor_cargas naviosAtracados)
-                                                   navioAtendido = horariosAtendimento (naviosAtracados,[ tempoAtendimento x berco infoPorto | x <- naviosAtracados ]) [] 
+                                                   navioAtendido = horariosAtendimento (naviosAtracados,[ tempoAtendimento x berco infoPorto | x <- naviosAtracados ]) []  
