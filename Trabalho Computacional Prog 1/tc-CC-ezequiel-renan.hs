@@ -79,11 +79,10 @@ tempoEspera navio fila berco infoPorto  | tempo < 0 = 0
 -- é menor ou igual a hora de fechamento do berco                             --
 --------------------------------------------------------------------------------
 atendido::Navio->Berco->ListaTempoAtendimento->Bool
-atendido navio berco atendimento = tempoAtendimento/=0 && chegadaAbertura && saidaFechamento
+atendido navio berco atendimento = tempoAtendimento/=0 && chegadaAbertura
                                    where 
                                        tempoAtendimento = (atendimento!!(id_berco berco - 1))!!(id_navio navio - 1)
                                        chegadaAbertura = get_chegada navio >= get_abertura berco
-                                       saidaFechamento = get_saida navio <= get_fechamento berco
 --------------------------------------------------------------------------------
 -- DADO UMA LISTA DE NAVIOS, ESSA FUNCAO RETORNA A ORDEM DE CHEGADA DO MESMO  --
 --                                                                            --

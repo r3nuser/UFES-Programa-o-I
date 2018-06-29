@@ -21,8 +21,7 @@
 
 module ListaToolbox(
     somatorio,
-    maximo,
-    maximoRecursivo
+    maximo
 )where
 
 --------------------------------------------------------------------------------
